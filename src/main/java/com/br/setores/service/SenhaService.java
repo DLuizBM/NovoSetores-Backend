@@ -63,10 +63,26 @@ public class SenhaService {
     public Senha chamarSenha(Long idFila, Long idGuiche) {
         Optional<Guiche> guicheOptional = guicheRepository.findById(idGuiche);
         Guiche guiche = guicheOptional.get();
-        Senha senha = senhaRepository.findByFirstDataEmissao(idFila);
-        senha.setGuiche(guiche);
-        senha.setSenhaStatus(SenhaStatus.EM_ATENDIMENTO);
-        senhaRepository.save(senha);
-        return senha;
+        try {
+            Senha senha = senhaRepository.findByFirstDataEmissao(idFila);
+            senha.setGuiche(guiche);
+            senha.setSenhaStatus(SenhaStatus.EM_ATENDIMENTO);
+            senhaRepository.save(senha);
+            return senha;
+        }catch (NullPointerException e) {
+            throw new NullPointerException("Não existem senhas para serem chamadas para essa fila.");
+        }
     }
+
+    public Senha ultimaSenhaChamada(Long idFila) {
+        return senhaRepository.findByLastCalled(idFila);
+    }
+
+    public void finalizarAtendimentoSenha(Long idSenha) {
+        Optional<Senha> senhaOptional = senhaRepository.findById(idSenha);
+        Senha senha = senhaOptional.get();
+        senha.setSenhaStatus(SenhaStatus.ATENDIDA);
+        senhaRepository.save(senha);
+    }
+
 }

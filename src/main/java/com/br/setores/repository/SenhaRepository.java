@@ -8,4 +8,7 @@ public interface SenhaRepository extends JpaRepository<Senha, Long> {
 
     @Query(value = SQLExpression.SELECT_FIRST_EMITTED_DATA, nativeQuery = true)
     Senha findByFirstDataEmissao(Long idFila);
+
+    @Query(value = SQLExpression.SELECT_LAST_CALLED, nativeQuery = true)
+    Senha findByLastCalled(Long idFila);
 }

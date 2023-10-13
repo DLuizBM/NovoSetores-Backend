@@ -6,5 +6,13 @@ public interface SQLExpression {
             "WHERE senha.fila_id = :idFila " +
             "AND senha.status_senha = 'AGUARDANDO_ATENDIMENTO' " +
             "AND senha.data_emissao = (SELECT min(tb_senha.data_emissao) FROM tb_senha  " +
-                                        "WHERE  tb_senha.status_senha = 'AGUARDANDO_ATENDIMENTO')";
+                                        "WHERE  tb_senha.status_senha = 'AGUARDANDO_ATENDIMENTO' " +
+                                        " AND tb_senha.fila_id = :idFila )";
+
+    public static String SELECT_LAST_CALLED = "SELECT * FROM tb_senha as senha " +
+            "WHERE senha.fila_id = :idFila " +
+            "AND senha.status_senha = 'ATENDIDA' " +
+            "AND senha.data_emissao = (SELECT min(tb_senha.data_emissao) FROM tb_senha  " +
+            "WHERE  tb_senha.status_senha = 'ATENDIDA' " +
+            " AND tb_senha.fila_id = :idFila )";
 }
