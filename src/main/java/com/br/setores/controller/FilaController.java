@@ -24,8 +24,8 @@ public class FilaController {
 
     @PostMapping
     public ResponseEntity<Object> criarFila(@RequestBody Fila fila){
-        filaService.criarFila(fila);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+        Fila filaCriada = filaService.criarFila(fila);
+        return ResponseEntity.ok().body(filaCriada);
     }
 
     @PutMapping

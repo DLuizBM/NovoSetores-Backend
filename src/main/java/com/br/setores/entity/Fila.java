@@ -30,4 +30,6 @@ public class Fila implements Serializable {
 
     private Boolean filaAtiva;
 
+    private String prefixo;
+
 }

@@ -18,9 +18,11 @@ public class FilaService {
         this.filaRepository = filaRepository;
     }
 
-    public void criarFila(Fila fila) {
+    public Fila criarFila(Fila fila) {
         fila.setFilaAtiva(true);
+        fila.setContadorSenhas(0L);
         filaRepository.save(fila);
+        return fila;
     }
 
     public List<Fila> obterFilasAtivas() {
@@ -41,6 +43,7 @@ public class FilaService {
         filaSelecionada.setSenhaMaxima(fila.getSenhaMaxima());
         filaSelecionada.setSenhaMinima(fila.getSenhaMinima());
         filaSelecionada.setTextoInformativo(fila.getTextoInformativo());
+        filaSelecionada.setPrefixo(fila.getPrefixo());
         filaRepository.save(filaSelecionada);
         return filaSelecionada;
     }
